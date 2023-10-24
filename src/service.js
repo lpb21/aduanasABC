@@ -19,7 +19,6 @@ module.exports = {
         // retorna el usuario
         return newUser;
     },
-
     updateUser:(id,dataUser)=>{
         //convierte el id a un número y toma el dia enviado en la funcion
         let identificador = Number(id);
@@ -40,5 +39,18 @@ module.exports = {
         return null;
         }
     },
-
+    deleteUser:(id)=>{
+        //convierte el id a un número y toma el dia enviado en la funcion
+        let identificador = Number(id);
+        //busca el índice del usuario con el id proporcionado en el array data
+        let userIndex = data.findIndex(user => user.id === identificador)
+        if (userIndex !== -1) {
+            // Eliminar el usuario del array
+            let deletedUser = data.splice(userIndex, 1)[0];
+            return deletedUser;
+        } else {
+            // Devolver null o un valor indicativo de que el usuario no fue encontrado
+            return null;
+        }
+    }
 }

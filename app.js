@@ -1,15 +1,11 @@
 const express = require('express')
-
 const service = require('./src/service')
-
-
 
 const app = express();
 const PORT = 3002;
 
 // permite recibir datos desde nuestros clientes
 app.use(express.json())
-
 
 app.get('/',(req, res)=>{
     res.json({
@@ -72,6 +68,16 @@ app.put('/:id',(req,res)=>{
             message: `Usuario con ID: ${id} no encontrado`,
         });
     }
+})
+
+//eliminacion de usuarios
+app.delete('/:id',(req,res)=>{
+    let { params : { id }} = req;
+    let deleteUser = service.deleteUser(id)
+    res.status(200).json({
+        message: `El usuario con ID: ${id} fue !ELIMINADO!`,
+        body: deleteUser,
+    });
 })
 
 //listen recibe 2 parametros
