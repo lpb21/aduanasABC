@@ -36,7 +36,8 @@ app.get('/:id',(req, res) => {
 });
 });
 
-app.post('/',(req, res)=>{
+// Creacion de usuario enviandole el id
+app.post('/',(req, res)=>{ 
     // se desestructura el body desde request y se le da un nombre (newUser)
    let { body : newUser } = req;
    //usar el servicio para agregar ese nuevo elemnto en el arreglo
@@ -48,6 +49,30 @@ app.post('/',(req, res)=>{
    })
 })
 
+//actualiza el usuario
+app.put('/:id',(req,res)=>{
+    //extrae el valor del parámetro id de la URL
+    let { params : { id }} = req;
+    // extrae el cuerpo de la solicitud PUT
+    let { body : newUpdate } = req;
+    //Esta función intentará encontrar el usuario con el id proporcionado 
+    //y actualizar sus datos con newUpdate
+    let updateUser = service.updateUser(id,newUpdate)
+
+    if (updateUser !== null) {
+        //Si es diferente de null, significa que el usuario fue encontrado y actualizado
+        //devuelve un código de estado 200
+        res.status(200).json({
+            message: `El usuario con ID: ${id} fue actualizado`,
+            body: updateUser,
+        });
+        //si updateUser es null, significa que el usuario no fue encontrado
+    } else {
+        res.status(404).json({
+            message: `Usuario con ID: ${id} no encontrado`,
+        });
+    }
+})
 
 //listen recibe 2 parametros
     //1: un puerto
