@@ -12,9 +12,6 @@ app.use(express.json())
 
 
 app.get('/',(req, res)=>{
-    // res.json({
-    //     message:'Hola desde express'
-    // })
     res.json({
         message: "lista de usuarios",
         body: service.getUsers(),
@@ -39,6 +36,17 @@ app.get('/:id',(req, res) => {
 });
 });
 
+app.post('/',(req, res)=>{
+    // se desestructura el body desde request y se le da un nombre (newUser)
+   let { body : newUser } = req;
+   //usar el servicio para agregar ese nuevo elemnto en el arreglo
+    let user = service.createUser(newUser)
+   //se le responde al cliente que sus datos han sido agregados
+   res.status(201).json({
+    message: "el usuario fue creado",
+    body: user,
+   })
+})
 
 
 //listen recibe 2 parametros
